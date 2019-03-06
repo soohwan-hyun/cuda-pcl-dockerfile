@@ -12,6 +12,10 @@ RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/s
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
+RUN apt-get update -y && apt-get install -y libgdal-* libgeotiff-dev
+RUN apt-get install -y git build-essential cmake
+RUN git clone https://github.com/PDAL/PDAL.git --branch 1.8.0 /root/pdal
+RUN cd /root/pdal && mkdir build && cd build && cmake ../ && make -j 5 && make install
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]

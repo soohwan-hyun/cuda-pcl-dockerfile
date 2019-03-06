@@ -16,7 +16,7 @@ RUN apt-get update -y --fix-missing && apt-get install -y libvtk5-dev
 RUN apt-get update -y --fix-missing && apt-get install -y libgdal-* libgeotiff-dev
 RUN apt-get update -y --fix-missing && apt-get install -y libeigen3-dev libflann-dev
 RUN apt-get update -y --fix-missing && apt-get install -y libboost-all-dev
-RUN apt-get install -y git build-essential cmake
+RUN apt-get install -y git build-essential cmake gdb
 RUN git clone https://github.com/PDAL/PDAL.git --branch 1.8.0 /root/pdal
 RUN cd /root/pdal && mkdir build && cd build && cmake ../ && make -j 16 && make install && cd /
 

@@ -12,10 +12,13 @@ RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/s
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
-RUN apt-get update -y && apt-get install -y libgdal-* libgeotiff-dev
+RUN apt-get update -y && apt-get install -y libgdal-* libgeotiff-dev libeigen3-dev libflann-dev libvtk5-dev libboost-dev-all
 RUN apt-get install -y git build-essential cmake
 RUN git clone https://github.com/PDAL/PDAL.git --branch 1.8.0 /root/pdal
-RUN cd /root/pdal && mkdir build && cd build && cmake ../ && make -j 5 && make install
+RUN cd /root/pdal && mkdir build && cd build && cmake ../ && make -j 6 && make install && cd /
+
+RUN git clone https://github.com/PointCloudLibrary/pcl --branch pcl-1.9.1 /root/pcl
+RUN cd /root/pcl && mkdir build && cd build && cmake ../ -DBUILD_CUDA=ON -DBUILD_GPU=ON && make -j 6 && make install && cd /
 
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]

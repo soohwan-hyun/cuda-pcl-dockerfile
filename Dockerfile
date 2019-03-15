@@ -24,5 +24,8 @@ RUN cd /root/pdal && mkdir build && cd build && cmake ../ && make -j 16 && make 
 RUN git clone https://github.com/PointCloudLibrary/pcl --branch pcl-1.9.1 /root/pcl
 RUN cd /root/pcl && mkdir build && cd build && cmake ../ -DBUILD_CUDA=ON -DBUILD_GPU=ON && make -j 16 && make install && cd /
 
+RUN git clone git://github.com/libLAS/libLAS.git --branch 1.8.1 /root/libLAS
+RUN cd /root/libLAS && mkdir build && cd build && cmake ../ && make -j 16 && make install && cd /
+
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
